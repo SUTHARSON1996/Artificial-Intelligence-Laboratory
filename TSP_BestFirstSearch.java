@@ -10,7 +10,7 @@ public class TSP_BestFirstSearch {
 
 
     public void initializeGraph(){
-        String input=null;
+        String input;
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter number of cities : ");
@@ -76,15 +76,18 @@ public class TSP_BestFirstSearch {
         return false;
     }
 
-    public void returnToSourceCity(int currentCity){
+    public boolean returnToSourceCity(int currentCity){
         ArrayList<String > list = this.adjacencyList.get(currentCity);
+        boolean flag = false;
         for (String x:list){
             if(Integer.parseInt(x.split("\\s+")[0])==this.sourceCity){
                 this.tourDistance = this.tourDistance+Integer.parseInt(x.split("\\s+")[1]);
                 System.out.println("--("+x.split("\\s+")[1]+")-->"+this.sourceCity);
+                flag = true;
                 break;
             }
         }
+        return flag;
     }
 
     public boolean checkVisitedNodes(){
@@ -117,10 +120,12 @@ public class TSP_BestFirstSearch {
             }
         }
         if(tsp.checkVisitedNodes()){
-            tsp.returnToSourceCity(currentCity);
-            System.out.println("greedy best first search => tour distance = "+tsp.tourDistance);
-        }else{
-            System.out.print("end\nTour cannot be continued as it does not have a hamiltonian cycle!!!");
+            if(tsp.returnToSourceCity(currentCity)) {
+                System.out.println("greedy best first search => tour distance = " + tsp.tourDistance);
+                return;
+            }
         }
+
+        System.out.print("end\nTour cannot be continued as it does not have a hamiltonian cycle!!!");
     }
 }
