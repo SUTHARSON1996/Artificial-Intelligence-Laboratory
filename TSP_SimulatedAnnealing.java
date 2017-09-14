@@ -168,6 +168,7 @@ public class TSP_SimulatedAnnealing {
         TSP_SimulatedAnnealing tsp = new TSP_SimulatedAnnealing();
         tsp.initializeGraph();
         tsp.setAvgStepCost();
+        tsp.setInitialEnergy();
         int currentCity=-1;
         while(!tsp.queue.isEmpty()){
             currentCity = tsp.queue.remove();
